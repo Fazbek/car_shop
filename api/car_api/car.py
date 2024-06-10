@@ -20,12 +20,12 @@ async def all_cars():
     return get_all_cars()
 
 
-@car_router.get("/add-car")
+@car_router.post("/add-car")
 async def add_car(id: int, model_of_car: str, type: str, id_detail: int, colour: str, strength_of_car: int, date_of_issue: int, amount_of_cars: int, description: str):
     add_c = add_car_db(id, model_of_car, type, id_detail, colour, strength_of_car, date_of_issue, amount_of_cars, description)
     return add_c
 
 
-@car_router.get("/change-car")
-async def change_car(id: int, new_car: str):
-    return change_car_db(id, new_car)
+@car_router.put("/change-car")
+async def change_car(id: int, model_of_car: str, type: str):
+    return change_car_db(id, model_of_car, type)

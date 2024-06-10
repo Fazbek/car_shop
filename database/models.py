@@ -1,15 +1,7 @@
-from sqlalchemy import Column, String, Integer, DateTime, ForeignKey, Float
+from sqlalchemy import Column, String, Integer, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
-
 from database import Base
-
-
-class User(Base):
-    __tablename__ = "users"
-    id = Column(Integer, autoincrement=True, primary_key=True)
-    name = Column(String, nullable=False)
-    phone_number = Column(Integer, nullable=False)
-    datetime = Column(DateTime)
+from datetime import datetime
 
 
 class Cars(Base):
@@ -17,7 +9,9 @@ class Cars(Base):
     id = Column(Integer, autoincrement=True, primary_key=True)
     model_of_car = Column(String, default="Select your type of cars", nullable=False)  # BMW,Ferrari
     type = Column(String, nullable=False)  # Sportcar, default car ...
-    datetime = Column(DateTime)
+    datetime = Column(DateTime, default=datetime.utcnow)
+
+    category = relationship("CategoryCars", back_populates="cars")
 
 
 class CategoryCars(Base):
@@ -28,3 +22,6 @@ class CategoryCars(Base):
     date_of_issue = Column(Integer, nullable=False)
     amount_of_cars = Column(Integer, nullable=False)
     description = Column(String, nullable=False)
+    datetime = Column(DateTime, default=datetime.utcnow)
+
+    cars = relationship("Cars", back_populates="category")
